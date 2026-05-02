@@ -1,7 +1,9 @@
 import asyncio
 from logging.config import fileConfig
 
+import sqlalchemy
 from alembic import context
+from core.config import settings
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
@@ -17,7 +19,7 @@ if config.config_file_name is not None:
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-from db.core.models.base_model import Base
+from db.models import Base
 
 target_metadata = Base.metadata
 
@@ -25,7 +27,6 @@ target_metadata = Base.metadata
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
-from core.config import settings
 
 config.set_main_option("sqlalchemy.url", settings.database_url)
 
@@ -108,7 +109,9 @@ def run_migrations_offline() -> None:
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
+        include_schemas=True,
         include_object=include_object,
+        version_table_schema=settings.database_schema,
     )
 
     with context.begin_transaction():
@@ -116,10 +119,17 @@ def run_migrations_offline() -> None:
 
 
 def do_run_migrations(connection: Connection) -> None:
+    connection.execute(
+        sqlalchemy.text(f"create schema if not exists {settings.database_schema}")
+    )
+    connection.commit()
+
     context.configure(
         connection=connection,
         target_metadata=target_metadata,
+        include_schemas=True,
         include_object=include_object,
+        version_table_schema=settings.database_schema,
     )
 
     with context.begin_transaction():
@@ -146,8 +156,18 @@ async def run_async_migrations() -> None:
 
 def run_migrations_online() -> None:
     """Run migrations in 'online' mode."""
+    try:
+        loop = asyncio.get_running_loop()
+    except RuntimeError:
+        loop = None
 
-    asyncio.run(run_async_migrations())
+    if loop and loop.is_running():
+        import nest_asyncio
+
+        nest_asyncio.apply()
+        asyncio.run(run_async_migrations())
+    else:
+        asyncio.run(run_async_migrations())
 
 
 if context.is_offline_mode():

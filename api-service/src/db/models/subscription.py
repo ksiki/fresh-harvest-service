@@ -9,11 +9,11 @@ from sqlalchemy.orm import Mapped, mapped_column
 class Subscription(Base):
     str_id: Mapped[str] = mapped_column(String(100), unique=True)
     title: Mapped[str] = mapped_column(String(100))
-    post_limit: Mapped[int]
+    active_post_limit: Mapped[int]
     post_lifetime_hours: Mapped[int]
     duration_days: Mapped[int]
     price: Mapped[Decimal] = mapped_column(Numeric(8, 2))
-    is_active: Mapped[bool] = mapped_column(default=False, server_default="true")
+    is_active: Mapped[bool] = mapped_column(default=True, server_default="true")
 
     __table_args__ = (
         CheckConstraint("price >= 0", name="subscription_check_price_positive"),

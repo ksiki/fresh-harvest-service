@@ -1,10 +1,11 @@
 from datetime import datetime
 
-from db.models.base import Base
-from db.models.subscription import Subscription
-from db.models.user import User
 from sqlalchemy import ForeignKey, func
 from sqlalchemy.orm import Mapped, mapped_column
+
+from shared.db.models.base import Base
+from shared.db.models.subscription import Subscription
+from shared.db.models.user import User
 
 
 class UserSubscription(Base):

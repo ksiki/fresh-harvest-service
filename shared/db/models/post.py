@@ -1,16 +1,16 @@
 from datetime import datetime
 from decimal import Decimal
 
-from core.config import settings
-from db.models.base import Base
-from db.models.product import Product
-from db.models.user import User
 from geoalchemy2 import Geometry
 from geoalchemy2.elements import WKBElement
 from sqlalchemy import CheckConstraint, Enum, ForeignKey, Index, Numeric, String, func
 from sqlalchemy.orm import Mapped, mapped_column
 
-from shared.enums import PostStatus
+from shared.common_config import settings
+from shared.db.models.base import Base
+from shared.db.models.product import Product
+from shared.db.models.user import User
+from shared.enums.post_status import PostStatus
 
 
 class Post(Base):

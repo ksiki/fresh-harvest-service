@@ -3,14 +3,14 @@ import logging
 from datetime import timedelta
 from decimal import Decimal
 
-from core.config import constants
-from db.core.base_rep import BaseRepository
-from db.models.post import Post
 from geoalchemy2.elements import WKBElement
 from sqlalchemy import func, insert, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from shared.enums import PostStatus
+from shared.common_config import constants
+from shared.db.core.base_rep import BaseRepository
+from shared.db.models.post import Post
+from shared.enums.post_status import PostStatus
 
 logger = logging.getLogger(__name__)
 

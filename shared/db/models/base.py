@@ -1,7 +1,8 @@
 import re
 
-from core.config import settings
 from sqlalchemy.orm import DeclarativeBase, Mapped, declared_attr, mapped_column
+
+from shared.common_config import settings
 
 
 class Base(DeclarativeBase):

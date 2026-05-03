@@ -1,11 +1,12 @@
 import logging
 
-from db.core.base_rep import BaseRepository
-from db.mixins.active_filter_mixin import ActiveFilterMixin
-from db.mixins.str_id_mixin import StrIdMixin
-from db.models.subscription import Subscription
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from shared.db.core.base_rep import BaseRepository
+from shared.db.mixins.active_filter_mixin import ActiveFilterMixin
+from shared.db.mixins.str_id_mixin import StrIdMixin
+from shared.db.models.subscription import Subscription
 
 logger = logging.getLogger(__name__)
 

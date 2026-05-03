@@ -1,9 +1,10 @@
 import logging
 
-from db.core.base_rep import BaseRepository
-from db.models.user import User
 from sqlalchemy import func, insert, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from shared.db.core.base_rep import BaseRepository
+from shared.db.models.user import User
 
 logger = logging.getLogger(__name__)
 

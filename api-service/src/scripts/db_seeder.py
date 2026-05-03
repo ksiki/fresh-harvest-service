@@ -4,16 +4,17 @@ from pathlib import Path
 from typing import Final
 
 from aiobotocore.client import AioBaseClient
-from db.image_rep import ImageCategory, ImageRepository
-from db.product_rep import ProductRepository
-from db.subscription_rep import SubscriptionRepository
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from shared.db.image_rep import ImageCategory, ImageRepository
+from shared.db.product_rep import ProductRepository
+from shared.db.subscription_rep import SubscriptionRepository
 
 logger = logging.getLogger(__name__)
 
 
 class DatabaseSeeder:
-    BASE_DIR: Final[Path] = Path(__file__).resolve().parent.parent.parent.parent
+    BASE_DIR: Final[Path] = Path(__file__).resolve().parent.parent.parent
     DATA_PATH: Final[Path] = BASE_DIR / "assets" / "data"
     SEED_ICONS_PATH: Final[Path] = BASE_DIR / "assets" / "seed_icons"
 

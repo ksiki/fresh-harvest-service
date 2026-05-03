@@ -5,7 +5,8 @@ from typing import Final
 import aioboto3
 from aiobotocore.client import AioBaseClient
 from botocore.exceptions import BotoCoreError, ClientError
-from core.config import settings
+
+from shared.common_config import settings
 
 logger = logging.getLogger(__name__)
 

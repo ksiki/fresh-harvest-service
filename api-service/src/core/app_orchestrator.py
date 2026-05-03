@@ -1,10 +1,11 @@
 import logging
 
-from core.config import settings
-from db.core.db_postgre import database as db_pg
-from db.core.db_s3 import database as db_s3
-from db.scripts.db_seeder import DatabaseSeeder
-from db.scripts.infrastructure_init import InfrastructureInitializer
+from scripts.db_seeder import DatabaseSeeder
+from scripts.infrastructure_init import InfrastructureInitializer
+
+from shared.common_config import settings
+from shared.db.core.db_postgre import database as db_pg
+from shared.db.core.db_s3 import database as db_s3
 
 logger = logging.getLogger(__name__)
 

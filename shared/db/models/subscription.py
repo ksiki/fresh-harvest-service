@@ -1,9 +1,10 @@
 from decimal import Decimal
 
-from core.config import settings
-from db.models.base import Base
 from sqlalchemy import CheckConstraint, Numeric, String
 from sqlalchemy.orm import Mapped, mapped_column
+
+from shared.common_config import settings
+from shared.db.models.base import Base
 
 
 class Subscription(Base):

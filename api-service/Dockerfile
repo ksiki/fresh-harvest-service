@@ -14,9 +14,13 @@ RUN poetry config virtualenvs.create false
 
 WORKDIR /app
 
-COPY pyproject.toml poetry.lock ./
+COPY api-service/pyproject.toml api-service/poetry.lock ./
 RUN poetry install --no-interaction --no-ansi --no-root
 
-COPY src ./src
+COPY shared ./shared
+COPY assets ./assets
+COPY api-service/src ./src
+
+ENV PYTHONPATH="/app"
 
 WORKDIR /app/src

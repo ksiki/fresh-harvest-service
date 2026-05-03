@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 class DatabaseSeeder:
-    BASE_DIR: Final[Path] = Path(__file__).resolve().parent.parent.parent
+    BASE_DIR: Final[Path] = Path(__file__).resolve().parent.parent.parent.parent
     DATA_PATH: Final[Path] = BASE_DIR / "assets" / "data"
     SEED_ICONS_PATH: Final[Path] = BASE_DIR / "assets" / "seed_icons"
 

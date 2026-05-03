@@ -1,4 +1,3 @@
-import enum
 from datetime import datetime
 from decimal import Decimal
 
@@ -11,11 +10,7 @@ from geoalchemy2.elements import WKBElement
 from sqlalchemy import CheckConstraint, Enum, ForeignKey, Index, Numeric, String, func
 from sqlalchemy.orm import Mapped, mapped_column
 
-
-class PostStatus(enum.Enum):
-    ACTIVE = "active"
-    ARCHIVE = "archive"
-    VALIDATE = "validate"
+from shared.enums import PostStatus
 
 
 class Post(Base):

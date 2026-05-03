@@ -51,8 +51,8 @@ services:
 
   api-service:
     build:
-      context: ./api-service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: api-service/Dockerfile
     container_name: fh-api
     volumes:
       - ./api-service/src:/app/src

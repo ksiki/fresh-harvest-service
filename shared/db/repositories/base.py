@@ -1,10 +1,13 @@
-from typing import Generic, Type, TypeVar, Union
+from typing import Generic, Type, TypeVar
 
 from aiobotocore.client import AioBaseClient
+from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
-T = TypeVar("T", bound=Union[AsyncSession, AioBaseClient])
-M = TypeVar("M")
+from shared.db.models.base import BaseModel
+
+T = TypeVar("T", bound=AsyncSession | AioBaseClient)
+M = TypeVar("M", bound=BaseModel)
 
 
 class BaseRepository(Generic[M, T]):
@@ -20,3 +23,7 @@ class BaseRepository(Generic[M, T]):
 
     async def get_by_id(self, id: int) -> M | None:
         return await self.session.get(self.model, id)
+
+    async def delete_by_id(self, id: int) -> None:
+        stmt = delete(self.model).where(self.model.id == id)
+        await self.session.execute(stmt)

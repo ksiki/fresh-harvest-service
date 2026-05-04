@@ -4,8 +4,8 @@ from datetime import timedelta
 from sqlalchemy import func, insert, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from shared.db.core.base_rep import BaseRepository
 from shared.db.models.user_subscription import UserSubscription
+from shared.db.repositories.base import BaseRepository
 
 logger = logging.getLogger(__name__)
 

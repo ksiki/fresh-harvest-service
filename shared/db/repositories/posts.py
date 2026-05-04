@@ -4,12 +4,12 @@ from datetime import timedelta
 from decimal import Decimal
 
 from geoalchemy2.elements import WKBElement
-from sqlalchemy import func, insert, select, update
+from sqlalchemy import delete, func, insert, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from shared.common_config import constants
-from shared.db.core.base_rep import BaseRepository
 from shared.db.models.post import Post
+from shared.db.repositories.base import BaseRepository
 from shared.enums.post_status import PostStatus
 
 logger = logging.getLogger(__name__)
@@ -47,6 +47,20 @@ class PostRepository(BaseRepository[Post, AsyncSession]):
             disable_at=func.now(),
             delete_at=func.now() + constants.archive_lifetime,
         )
+
+    async def archivate_all_old_posts(self) -> None:
+        stmt = (
+            update(Post)
+            .where(Post.status == PostStatus.ACTIVE, Post.disable_at < func.now())
+            .values(status=PostStatus.ARCHIVE)
+        )
+        await self.session.execute(stmt)
+
+    async def delete_all_old_posts(self) -> None:
+        stmt = delete(Post).where(
+            Post.status == PostStatus.ARCHIVE, Post.delete_at < func.now()
+        )
+        await self.session.execute(stmt)
 
     async def create(
         self,

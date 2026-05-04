@@ -4,7 +4,7 @@ from typing import Final
 from aiobotocore.client import AioBaseClient
 
 from shared.common_config import settings
-from shared.db.core.base_rep import BaseRepository
+from shared.db.repositories.base import BaseRepository
 from shared.enums.image_category import ImageCategory
 
 logger = logging.getLogger(__name__)

@@ -4,10 +4,10 @@ from sqlalchemy import update
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from shared.db.core.base_rep import BaseRepository
 from shared.db.mixins.active_filter_mixin import ActiveFilterMixin
 from shared.db.mixins.str_id_mixin import StrIdMixin
 from shared.db.models.product import Product
+from shared.db.repositories.base import BaseRepository
 
 logger = logging.getLogger(__name__)
 

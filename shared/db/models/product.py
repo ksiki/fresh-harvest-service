@@ -1,10 +1,10 @@
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column
 
-from shared.db.models.base import Base
+from shared.db.models.base import BaseModel
 
 
-class Product(Base):
+class Product(BaseModel):
     str_id: Mapped[str] = mapped_column(String(32), unique=True)
     name: Mapped[str] = mapped_column(String(32))
     icon_name: Mapped[str] = mapped_column(String(255))

@@ -4,10 +4,10 @@ from sqlalchemy import CheckConstraint, Numeric, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from shared.common_config import settings
-from shared.db.models.base import Base
+from shared.db.models.base import BaseModel
 
 
-class Subscription(Base):
+class Subscription(BaseModel):
     str_id: Mapped[str] = mapped_column(String(100), unique=True)
     title: Mapped[str] = mapped_column(String(100))
     active_post_limit: Mapped[int]

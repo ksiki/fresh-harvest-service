@@ -2,10 +2,10 @@ from datetime import datetime
 
 from sqlalchemy.orm import Mapped, mapped_column
 
-from shared.db.models.base import Base
+from shared.db.models.base import BaseModel
 
 
-class User(Base):
+class User(BaseModel):
     tg_id: Mapped[int] = mapped_column(unique=True)
     first_activity: Mapped[datetime]
     last_activity: Mapped[datetime]

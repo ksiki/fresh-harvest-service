@@ -5,7 +5,7 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, declared_attr, mapped_column
 from shared.common_config import settings
 
 
-class Base(DeclarativeBase):
+class BaseModel(DeclarativeBase):
     __abstract__ = True
     __table_args__ = {"schema": settings.database_schema}
 

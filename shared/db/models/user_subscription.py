@@ -3,12 +3,12 @@ from datetime import datetime
 from sqlalchemy import ForeignKey, func
 from sqlalchemy.orm import Mapped, mapped_column
 
-from shared.db.models.base import Base
+from shared.db.models.base import BaseModel
 from shared.db.models.subscription import Subscription
 from shared.db.models.user import User
 
 
-class UserSubscription(Base):
+class UserSubscription(BaseModel):
     user_id: Mapped[int] = mapped_column(ForeignKey(User.id))
     subscription_id: Mapped[int] = mapped_column(ForeignKey(Subscription.id))
     purchase_at: Mapped[datetime] = mapped_column(

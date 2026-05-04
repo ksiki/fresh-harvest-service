@@ -7,13 +7,13 @@ from sqlalchemy import CheckConstraint, Enum, ForeignKey, Index, Numeric, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from shared.common_config import settings
-from shared.db.models.base import Base
+from shared.db.models.base import BaseModel
 from shared.db.models.product import Product
 from shared.db.models.user import User
 from shared.enums.post_status import PostStatus
 
 
-class Post(Base):
+class Post(BaseModel):
     user_id: Mapped[int] = mapped_column(ForeignKey(User.id))
     product_id: Mapped[int] = mapped_column(ForeignKey(Product.id))
     image_name: Mapped[str] = mapped_column(String(255))

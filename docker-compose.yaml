@@ -7,10 +7,12 @@ x-common-env: &common-env
   S3_BUCKET_NAME: ${S3_BUCKET_NAME}
   DATABASE_SCHEMA: ${DATABASE_SCHEMA}
   DATABASE_URL: ${DATABASE_URL}
+  RABBITMQ_URL: ${RABBITMQ_URL}
+  PYTHONPATH: /app
 
 services:
   db:
-    image: postgis/postgis:15-3.3
+    image: postgis/postgis:15-3.3-alpine
     container_name: fh-db
     restart: always
     environment:
@@ -28,7 +30,7 @@ services:
       retries: 5
 
   rabbitmq:
-    image: rabbitmq:3-management
+    image: rabbitmq:3-management-alpine
     container_name: fh-rabbitmq
     hostname: my-rabbit
     volumes:
@@ -65,9 +67,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      RABBITMQ_URL: ${RABBITMQ_URL}
       YANDEX_MAPS_API_KEY: ${YANDEX_MAPS_API_KEY}
-      PYTHONPATH: /app
       <<: *common-env
     working_dir: /app/src
     command: python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
@@ -77,14 +77,39 @@ services:
       rabbitmq:
         condition: service_healthy
 
-  worker:
+  worker-scheduler:
     build:
       context: .
-      dockerfile: db-worker/Dockerfile
-    container_name: fh-db-worker
+      dockerfile: worker-scheduler/Dockerfile
+    container_name: fh-worker-scheduler
     environment:
       <<: *common-env
-    command: python -m main
+    command: taskiq scheduler worker.scheduler:scheduler
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 128M
+    depends_on:
+      db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  worker-consumer:
+    build:
+      context: .
+      dockerfile: worker-consumer/Dockerfile
+    container_name: fh-worker-consumer
+    environment:
+      <<: *common-env
+    command: taskiq worker shared.queue.tasks:broker --workers 2
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
     depends_on:
       db:
         condition: service_healthy
@@ -99,9 +124,10 @@ services:
     volumes:
       - ./tg-service/bot:/app/bot
     environment:
+      X_API_KEY: ${X_API_KEY}
+      DEBUG: ${DEBUG}
       TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
       WEB_APP_URL: ${WEB_APP_URL}
-      <<: *common-env
     working_dir: /app/bot
     command: python -m run
     depends_on:

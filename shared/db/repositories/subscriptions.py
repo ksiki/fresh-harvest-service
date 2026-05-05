@@ -1,8 +1,10 @@
 import logging
 
+from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from shared.db.core.exceptions import SubscriptionNotFoundError
 from shared.db.mixins.active_filter_mixin import ActiveFilterMixin
 from shared.db.mixins.str_id_mixin import StrIdMixin
 from shared.db.models.subscription import Subscription
@@ -17,6 +19,21 @@ class SubscriptionRepository(
     StrIdMixin[Subscription],
 ):
     model = Subscription
+
+    async def get_free_subscription(self) -> Subscription:
+        stmt = (
+            select(Subscription)
+            .where(Subscription.str_id.ilike("%free%"), Subscription.is_active == True)
+            .order_by(Subscription.id)
+            .limit(limit=1)
+        )
+        result = await self.session.execute(stmt)
+        sub = result.scalar_one_or_none()
+
+        if not sub:
+            raise SubscriptionNotFoundError()
+
+        return sub
 
     async def create_or_update(
         self,

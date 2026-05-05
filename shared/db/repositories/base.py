@@ -1,3 +1,4 @@
+from abc import ABC
 from typing import Generic, Type, TypeVar
 
 from aiobotocore.client import AioBaseClient
@@ -10,7 +11,7 @@ T = TypeVar("T", bound=AsyncSession | AioBaseClient)
 M = TypeVar("M", bound=BaseModel)
 
 
-class BaseRepository(Generic[M, T]):
+class BaseRepository(Generic[M, T], ABC):
     __slots__ = ("_session",)
     model: Type[M]
 

@@ -19,7 +19,7 @@ class Subscription(BaseModel):
     __table_args__ = (
         CheckConstraint("price >= 0", name="subscription_check_price_positive"),
         CheckConstraint(
-            "post_limit > 0", name="subscription_check_post_limit_positive"
+            "active_post_limit > 0", name="subscription_check_post_limit_positive"
         ),
         CheckConstraint(
             "duration_days > 0", name="subscription_check_duration_days_positive"

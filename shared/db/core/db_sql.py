@@ -9,7 +9,7 @@ from shared.common_config import settings
 logger = logging.getLogger(__name__)
 
 
-class PostgreClient:
+class SQLClient:
     __slots__ = ("_engine", "_session_factory")
 
     def __init__(self, url: str, echo: bool = False) -> None:
@@ -40,6 +40,4 @@ class PostgreClient:
         await self._engine.dispose()
 
 
-database: Final[PostgreClient] = PostgreClient(
-    url=settings.database_url, echo=settings.debug
-)
+database: Final[SQLClient] = SQLClient(url=settings.database_url, echo=settings.debug)

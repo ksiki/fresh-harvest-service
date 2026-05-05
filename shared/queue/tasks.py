@@ -31,5 +31,5 @@ async def checking_user_subscriptions_task():
 
 
 @broker.task(task_name=TaskType.VALIDATE_POST)
-async def validate_post_task():
+async def validate_post_task(post_id: int):
     pass

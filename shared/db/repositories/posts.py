@@ -19,7 +19,9 @@ class PostRepository(BaseRepository[Post, AsyncSession]):
     model = Post
 
     async def get_by_products(self, products: set[int]) -> list[Post]:
-        stmt = select(Post).where(Post.product_id.in_(products))
+        stmt = select(Post).where(
+            Post.product_id.in_(products), Post.status == PostStatus.ACTIVE
+        )
         result = await self.session.execute(stmt)
         return list(result.scalars().all())
 

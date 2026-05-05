@@ -20,7 +20,6 @@ class ProductRepository(
     model = Product
 
     async def change_icon_seeded_status(self, prod_id: int, new_status: bool) -> None:
-        logger.info("Change icon seeded status")
         stmt = (
             update(Product).where(Product.id == prod_id).values(icon_seeded=new_status)
         )
@@ -29,8 +28,6 @@ class ProductRepository(
     async def create_or_update(
         self, str_id: str, name: str, icon_name: str, is_active: bool
     ) -> None:
-        logger.info("Create or update product")
-
         icon_seeded = False
         product = await self.get_by_str_id(str_id=str_id)
         if product and product.icon_name == icon_name and product.icon_seeded:

@@ -29,10 +29,8 @@ class UserRepository(BaseRepository[User, AsyncSession]):
             .returning(User.id)
         )
         result = await self.session.execute(stmt)
-        logger.info("Register new user completed successfully.")
         return result.scalar_one()
 
     async def update_last_activity(self, tg_id: int) -> None:
         stmt = update(User).where(User.tg_id == tg_id).values(last_activity=func.now())
         await self.session.execute(stmt)
-        logger.info("Update last activity completed successfully.")

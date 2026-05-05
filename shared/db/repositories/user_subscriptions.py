@@ -39,7 +39,6 @@ class UserSubscriptionRepository(BaseRepository[UserSubscription, AsyncSession])
             .values(expires_at=func.now(), is_active=False)
         )
         await self.session.execute(disable_stmt)
-        logger.info("Disable all old user subscriptions completed successfully.")
 
         insert_stmt = (
             insert(UserSubscription)
@@ -53,7 +52,6 @@ class UserSubscriptionRepository(BaseRepository[UserSubscription, AsyncSession])
             .returning(UserSubscription.id)
         )
         result = await self.session.execute(insert_stmt)
-        logger.info("Subscribe user completed successfully.")
         return result.scalar_one_or_none()
 
     async def deactivate_expired_subscriptions(self) -> list[int]:

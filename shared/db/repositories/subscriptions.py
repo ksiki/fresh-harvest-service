@@ -45,7 +45,6 @@ class SubscriptionRepository(
         price: float,
         is_active: bool,
     ) -> None:
-        logger.info("Create or update subscription")
         stmt = insert(Subscription).values(
             str_id=str_id,
             title=title,

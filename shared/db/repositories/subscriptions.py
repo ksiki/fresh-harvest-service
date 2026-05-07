@@ -1,4 +1,5 @@
 import logging
+from decimal import Decimal
 
 from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert
@@ -42,7 +43,7 @@ class SubscriptionRepository(
         active_post_limit: int,
         post_lifetime_hours: int,
         duration_days: int,
-        price: float,
+        price: Decimal,
         is_active: bool,
     ) -> None:
         stmt = insert(Subscription).values(

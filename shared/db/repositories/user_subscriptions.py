@@ -14,9 +14,11 @@ class UserSubscriptionRepository(BaseRepository[UserSubscription, AsyncSession])
     model = UserSubscription
 
     async def get_active(self, user_id: int) -> UserSubscription | None:
-        """Всегда должно возвращать подписку, если пользователь существует (без None)
+        """Всегда должно возвращать подписку, если пользователь существует
         т.к. сторонний воркер для обслуживания БД следит за тем,
-        что при окончании подписки, дает пользователю бесплатную"""
+        что при окончании подписки, дает пользователю бесплатную,
+        а если оркер не успеет обновить подписку, то вернет последнюю активную даже,
+        если ее время вышло (по сути, она будет считаться текущей подпиской, пока воркер не отработает))"""
 
         stmt = (
             select(UserSubscription)
@@ -28,7 +30,7 @@ class UserSubscriptionRepository(BaseRepository[UserSubscription, AsyncSession])
         )
         result = await self.session.execute(stmt)
         logger.info("Get active user subsctiprion completed successfully.")
-        return result.scalar_one()
+        return result.scalar_one_or_none()
 
     async def subscribe(self, user_id: int, sub_id: int, duration: timedelta) -> int:
         disable_stmt = (
@@ -68,7 +70,7 @@ class UserSubscriptionRepository(BaseRepository[UserSubscription, AsyncSession])
         return list(result.scalars().all())
 
     async def bulk_subscribe_free(
-        self, user_ids: list[int], free_sub_id: int, duration: timedelta
+        self, user_ids: set[int], free_sub_id: int, duration: timedelta
     ) -> None:
         stmt = insert(UserSubscription).values(
             [

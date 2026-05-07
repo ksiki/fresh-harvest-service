@@ -8,7 +8,9 @@ from shared.db.repositories.users import UserRepository
 
 @pytest.mark.asyncio
 class TestUserRep:
-    async def test_register_user_and_update_activity(self, user_rep: UserRepository):
+    async def test_register_user_and_update_activity(
+        self, user_rep: UserRepository
+    ) -> None:
         tg_id = 12345
 
         with patch("shared.db.repositories.users.func.now") as mock_now:

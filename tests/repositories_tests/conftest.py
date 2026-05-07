@@ -1,7 +1,12 @@
 import pytest
 import pytest_asyncio
 from sqlalchemy import text
-from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
+from sqlalchemy.ext.asyncio import (
+    AsyncEngine,
+    AsyncSession,
+    async_sessionmaker,
+    create_async_engine,
+)
 from testcontainers.postgres import PostgresContainer
 
 from shared.db.models.base import BaseModel
@@ -13,13 +18,13 @@ from shared.db.repositories.users import UserRepository
 
 
 @pytest.fixture(scope="session")
-def postgres_container():
+def postgres_container() -> PostgresContainer:
     with PostgresContainer("postgis/postgis:15-3.3-alpine") as postgres:
         yield postgres
 
 
 @pytest_asyncio.fixture(scope="function")
-async def engine(postgres_container):
+async def engine(postgres_container) -> AsyncEngine:
     url = postgres_container.get_connection_url().replace("psycopg2", "asyncpg")
     engine = create_async_engine(url)
 
@@ -32,7 +37,7 @@ async def engine(postgres_container):
 
 
 @pytest_asyncio.fixture(scope="function")
-async def session(engine):
+async def session(engine) -> AsyncSession:
     connection = await engine.connect()
     trans = await connection.begin()
 

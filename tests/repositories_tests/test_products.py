@@ -5,7 +5,7 @@ from shared.db.repositories.products import ProductRepository
 
 @pytest.mark.asyncio
 class TestUserRep:
-    async def test_create_new_product(self, product_rep: ProductRepository):
+    async def test_create_new_product(self, product_rep: ProductRepository) -> None:
         prod_str_id = "product"
         prod_name = "Product"
         await product_rep.create_or_update(

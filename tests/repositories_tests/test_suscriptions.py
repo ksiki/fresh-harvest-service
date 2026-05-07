@@ -12,7 +12,7 @@ from shared.db.repositories.subscriptions import SubscriptionRepository
 class TestSubscriptionRep:
     async def test_create_new_subscription(
         self, subscription_rep: SubscriptionRepository
-    ):
+    ) -> None:
         sub_str_id = "subscription"
         sub_title = "Subscription"
         await subscription_rep.create_or_update(
@@ -45,7 +45,7 @@ class TestSubscriptionRep:
         sub_str_id: str,
         expectation: Any,
         subscription_rep: SubscriptionRepository,
-    ):
+    ) -> None:
         await subscription_rep.create_or_update(
             str_id=sub_str_id,
             title="Subscription",

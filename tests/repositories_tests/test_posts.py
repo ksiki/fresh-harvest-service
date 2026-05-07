@@ -92,7 +92,7 @@ class TestPostRep:
 
     async def test_get_by_products(
         self, post_factory: Callable, post_rep: PostRepository
-    ):
+    ) -> None:
         post_id_1 = await post_factory(
             tg_id=1, prod_str_id="apple", status=PostStatus.ACTIVE
         )
@@ -105,7 +105,7 @@ class TestPostRep:
 
     async def test_get_by_user(
         self, post_factory: Callable, post_rep: PostRepository, user_rep: UserRepository
-    ):
+    ) -> None:
         post_id_1 = await post_factory(
             tg_id=1, prod_str_id="apple", status=PostStatus.ACTIVE
         )
@@ -119,7 +119,7 @@ class TestPostRep:
 
     async def test_archivate_all_old_posts(
         self, post_factory: Callable, post_rep: PostRepository, session: AsyncSession
-    ):
+    ) -> None:
         post_id = await post_factory(
             tg_id=1,
             prod_str_id="apple",
@@ -140,7 +140,7 @@ class TestPostRep:
 
     async def test_delete_all_old_posts(
         self, post_factory: Callable, post_rep: PostRepository, session: AsyncSession
-    ):
+    ) -> None:
         archive_post_id = await post_factory(
             tg_id=1, prod_str_id="apple", status=PostStatus.ARCHIVE
         )

@@ -48,7 +48,8 @@ class UserSubscriptionRepository(BaseRepository[UserSubscription, AsyncSession])
                 user_id=user_id,
                 subscription_id=sub_id,
                 purchase_at=func.now(),
-                expires_at=func.now() + duration,
+                expires_at=func.date_trunc("day", func.now())
+                + (duration + timedelta(days=1)),
                 is_active=True,
             )
             .returning(UserSubscription.id)

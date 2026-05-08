@@ -1,0 +1,152 @@
+[
+    {
+        "str_id": "bread",
+        "name": "Хлеб",
+        "icon_name": "bread.png",
+        "is_active": true
+    },
+    {
+        "str_id": "eggs",
+        "name": "Яйца",
+        "icon_name": "eggs.png",
+        "is_active": true
+    },
+    {
+        "str_id": "honey",
+        "name": "Мёд",
+        "icon_name": "honey.png",
+        "is_active": true
+    },
+    {
+        "str_id": "milk",
+        "name": "Молоко",
+        "icon_name": "milk.png",
+        "is_active": true
+    },
+    {
+        "str_id": "cheese_handmade",
+        "name": "Домашний сыр",
+        "icon_name": "cheese_handmade.png",
+        "is_active": true
+    },
+    {
+        "str_id": "strawberry_wild",
+        "name": "Земляника",
+        "icon_name": "strawberry_wild.png",
+        "is_active": true
+    },
+    {
+        "str_id": "strawberry",
+        "name": "Клубника",
+        "icon_name": "strawberry.png",
+        "is_active": true
+    },
+    {
+        "str_id": "blueberry",
+        "name": "Черника",
+        "icon_name": "blueberry.png",
+        "is_active": true
+    },
+    {
+        "str_id": "cranberry",
+        "name": "Клюква",
+        "icon_name": "cranberry.png",
+        "is_active": true
+    },
+    {
+        "str_id": "raspberry",
+        "name": "Малина",
+        "icon_name": "raspberry.png",
+        "is_active": true
+    },
+    {
+        "str_id": "mushrooms",
+        "name": "Грибы",
+        "icon_name": "mushrooms.png",
+        "is_active": true
+    },
+    {
+        "str_id": "wheat",
+        "name": "Пшеница",
+        "icon_name": "wheat.png",
+        "is_active": true
+    },
+    {
+        "str_id": "hay",
+        "name": "Сено",
+        "icon_name": "hay.png",
+        "is_active": true
+    },
+    {
+        "str_id": "animal_feed",
+        "name": "Комбикорм",
+        "icon_name": "animal_feed.png",
+        "is_active": true
+    },
+    {
+        "str_id": "butter",
+        "name": "Сливочное масло",
+        "icon_name": "butter.png",
+        "is_active": true
+    },
+    {
+        "str_id": "jam",
+        "name": "Варенье",
+        "icon_name": "jam.png",
+        "is_active": true
+    },
+    {
+        "str_id": "potatoes",
+        "name": "Картофель",
+        "icon_name": "potatoes.png",
+        "is_active": true
+    },
+    {
+        "str_id": "apples",
+        "name": "Яблоки",
+        "icon_name": "apples.png",
+        "is_active": true
+    },
+    {
+        "str_id": "sunflower_oil",
+        "name": "Подсолнечное масло",
+        "icon_name": "sunflower_oil.png",
+        "is_active": true
+    },
+    {
+        "str_id": "sour_cream",
+        "name": "Сметана",
+        "icon_name": "sour_cream.png",
+        "is_active": true
+    },
+    {
+        "str_id": "fertilizer",
+        "name": "Удобрение",
+        "icon_name": "fertilizer.png",
+        "is_active": true
+    },
+    {
+        "str_id": "pickles",
+        "name": "Соленья",
+        "icon_name": "pickles.png",
+        "is_active": true
+    },
+    {
+        "str_id": "seeds",
+        "name": "Семена",
+        "icon_name": "seeds.png",
+        "is_active": true
+    },
+    {
+        "str_id": "goat_milk",
+        "name": "Козье молоко",
+        "icon_name": "goat_milk.png",
+        "is_active": true
+    },
+    {
+        "str_id": "dried_meat",
+        "name": "Вяленое мясо",
+        "icon_name": "dried_meat.png",
+        "is_active": true
+    }
+]

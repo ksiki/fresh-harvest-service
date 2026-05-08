@@ -1,0 +1,29 @@
+[
+    {
+        "str_id": "free",
+        "title": "Начинающий",
+        "active_post_limit": 2,
+        "post_lifetime_hours": 24,
+        "duration_days": 9999,
+        "price": 0.00,
+        "is_active": true
+    },
+    {
+        "str_id": "trader_30_days",
+        "title": "Торговец",
+        "active_post_limit": 5,
+        "post_lifetime_hours": 336,
+        "duration_days": 30,
+        "price": 0.49,
+        "is_active": true
+    },
+    {
+        "str_id": "business_30_days",
+        "title": "Бизнес",
+        "active_post_limit": 15,
+        "post_lifetime_hours": 720,
+        "duration_days": 30,
+        "price": 0.99,
+        "is_active": false
+    }
+]

@@ -33,6 +33,13 @@ class Post(BaseModel):
 
     __table_args__ = (
         Index("idx_post_geo_gist", "geo", postgresql_using="gist"),
+        Index("idx_post_product_status", "product_id", "status"),
+        Index("idx_post_user_status", "user_id", "status"),
+        Index(
+            "idx_post_disable_at_active",
+            "disable_at",
+            postgresql_where=(status == PostStatus.ACTIVE),
+        ),
         CheckConstraint("price >= 0", name="post_check_price_positive"),
         {"schema": settings.database_schema},
     )

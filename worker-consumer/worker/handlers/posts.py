@@ -43,6 +43,7 @@ class PostHandler:
             user = await user_rep.get_by_id(id=post.user_id)
             text = f"Ваш пост #{post.id} был удален. Причина: {message}"
             await post_rep.delete_by_id(id=post.id)
+            await image_rep.delete(ImageCategory.POST, name=post.image_name)
             await notify_user.kiq(tg_id=user.tg_id, message=text)
 
         if profanity.contains_profanity(post.description):

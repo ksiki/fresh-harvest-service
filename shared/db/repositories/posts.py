@@ -58,11 +58,16 @@ class PostRepository(BaseRepository[Post, AsyncSession]):
         )
         await self.session.execute(stmt)
 
-    async def delete_all_old_posts(self) -> None:
-        stmt = delete(Post).where(
-            Post.status == PostStatus.ARCHIVE, Post.delete_at < func.now()
+    async def delete_all_old_posts(self) -> set:
+        """После удаления постов, возвращает множество изображений этих постов,
+        что бы можно было удалить их из S3 хранилища"""
+        stmt = (
+            delete(Post)
+            .where(Post.status == PostStatus.ARCHIVE, Post.delete_at < func.now())
+            .returning(Post.image_name)
         )
-        await self.session.execute(stmt)
+        result = await self.session.execute(stmt)
+        return set(result.scalars().all())
 
     async def create(
         self,

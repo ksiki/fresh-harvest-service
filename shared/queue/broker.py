@@ -1,6 +1,7 @@
 import logging
 from typing import Final
 
+import taskiq_dependencies
 from taskiq_aio_pika import AioPikaBroker
 
 from shared.common_config import settings
@@ -25,3 +26,4 @@ def get_broker(url: str) -> AioPikaBroker:
 
 
 broker: Final[AioPikaBroker] = get_broker(url=settings.rabbitmq_url)
+taskiq_dependencies.DependencyGraph(broker)

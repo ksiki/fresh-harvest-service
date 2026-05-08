@@ -120,14 +120,13 @@ services:
 
   tg-service:
     build:
-      context: ./tg-service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: tg-service/Dockerfile
     container_name: fh-bot
     volumes:
       - ./tg-service/bot:/app/bot
     environment:
-      X_API_KEY: ${X_API_KEY}
-      DEBUG: ${DEBUG}
+      <<: *common-env
       TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
       WEB_APP_URL: ${WEB_APP_URL}
     working_dir: /app/bot

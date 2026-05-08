@@ -405,6 +405,18 @@ files = [
 ]
 
 [[package]]
+name = "better-profanity"
+version = "0.7.0"
+description = "Blazingly fast cleaning swear words (and their leetspeak) in strings"
+optional = false
+python-versions = "==3.*"
+groups = ["main"]
+files = [
+    {file = "better_profanity-0.7.0-py3-none-any.whl", hash = "sha256:bd4c529ea6aa2db1aaa50524be1ed14d0fe5c664f1fd88c8bc388c7e9f9f00e8"},
+    {file = "better_profanity-0.7.0.tar.gz", hash = "sha256:8a6fdc8606d7471e7b5f6801917eca98ec211098262e82f62da4f5de3a73145b"},
+]
+
+[[package]]
 name = "boto3"
 version = "1.40.61"
 description = "The AWS SDK for Python"
@@ -1503,6 +1515,17 @@ botocore = ">=1.37.4,<2.0a.0"
 crt = ["botocore[crt] (>=1.37.4,<2.0a.0)"]
 
 [[package]]
+name = "sightengine"
+version = "1.4.0"
+description = "Sightengine Python client"
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "sightengine-1.4.0-py2.py3-none-any.whl", hash = "sha256:21cc009d3f5ce7389af3002afa17cba2dd83fc567e12a6a1c94ab57cdf42e3d2"},
+]
+
+[[package]]
 name = "six"
 version = "1.17.0"
 description = "Python 2 and 3 compatibility utilities"
@@ -1991,4 +2014,4 @@ propcache = ">=0.2.1"
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<3.13"
-content-hash = "dcdf601c7774444f3b123924b70d2b0b2a0865c2e28a595901c1fbca9e34a664"
+content-hash = "4488a079a8bfff93cb03d6d8a1f4993887750ece56a21a160cd2c5ec077da839"

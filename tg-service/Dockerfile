@@ -14,7 +14,12 @@ RUN poetry config virtualenvs.create false
 
 WORKDIR /app
 
-COPY pyproject.toml poetry.lock ./
+COPY tg-service/pyproject.toml tg-service/poetry.lock ./
 RUN poetry install --no-interaction --no-ansi --no-root
 
-COPY bot ./bot
+COPY shared ./shared
+COPY tg-service/bot ./bot
+
+ENV PYTHONPATH="/app"
+
+WORKDIR /app/bot

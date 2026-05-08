@@ -1,10 +1,13 @@
 import asyncio
 
+import task_handler  # noqa: F401
 from aiogram import Bot
 from aiogram.types import MenuButtonWebApp, WebAppInfo
 from config import settings
 from create_bot import bot, dispatcher
 from router import router
+
+from shared.queue.broker import broker
 
 
 async def set_main_menu_button(bot: Bot):
@@ -19,6 +22,8 @@ async def set_main_menu_button(bot: Bot):
 async def run():
     await bot.delete_webhook(drop_pending_updates=True)
     await set_main_menu_button(bot=bot)
+
+    asyncio.create_task(broker.startup())
 
     dispatcher.include_router(router=router)
     await dispatcher.start_polling(bot)

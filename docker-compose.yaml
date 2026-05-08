@@ -102,6 +102,8 @@ services:
       dockerfile: worker-consumer/Dockerfile
     container_name: fh-worker-consumer
     environment:
+      SIGHTENGINE_API_USER: ${SIGHTENGINE_API_USER}
+      SIGHTENGINE_API_SECRET: ${SIGHTENGINE_API_SECRET}
       <<: *common-env
     command: taskiq worker shared.queue.tasks:broker --workers 2
     deploy:

@@ -27,6 +27,18 @@ def upgrade() -> None:
         schema="content",
         nullable=False,
     )
+    op.drop_constraint(
+        "subscription_check_post_limit_positive",
+        "subscription",
+        schema="content",
+        type_="check",
+    )
+    op.create_check_constraint(
+        "subscription_check_active_post_limit_positive",
+        "subscription",
+        "active_post_limit > 0",
+        schema="content",
+    )
     # ### end Alembic commands ###
 
 
@@ -39,5 +51,17 @@ def downgrade() -> None:
         new_column_name="post_limit",
         schema="content",
         nullable=False,
+    )
+    op.drop_constraint(
+        "subscription_check_active_post_limit_positive",
+        "subscription",
+        schema="content",
+        type_="check",
+    )
+    op.create_check_constraint(
+        "subscription_check_post_limit_positive",
+        "subscription",
+        "post_limit > 0",
+        schema="content",
     )
     # ### end Alembic commands ###

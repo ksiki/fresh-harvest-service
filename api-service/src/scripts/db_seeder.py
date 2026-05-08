@@ -6,9 +6,9 @@ from typing import Final
 from aiobotocore.client import AioBaseClient
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from shared.db.image_rep import ImageCategory, ImageRepository
-from shared.db.product_rep import ProductRepository
-from shared.db.subscription_rep import SubscriptionRepository
+from shared.db.repositories.images import ImageCategory, ImageRepository
+from shared.db.repositories.products import ProductRepository
+from shared.db.repositories.subscriptions import SubscriptionRepository
 
 logger = logging.getLogger(__name__)
 
@@ -30,11 +30,11 @@ class DatabaseSeeder:
 
     @classmethod
     async def run_bootstrap(
-        cls, pg_session: AsyncSession, s3_session: AioBaseClient
+        cls, sql_session: AsyncSession, s3_session: AioBaseClient
     ) -> None:
         seeder = cls(
-            sub_rep=SubscriptionRepository(pg_session),
-            prod_rep=ProductRepository(pg_session),
+            sub_rep=SubscriptionRepository(sql_session),
+            prod_rep=ProductRepository(sql_session),
             img_rep=ImageRepository(s3_session),
         )
         await seeder.run_all()

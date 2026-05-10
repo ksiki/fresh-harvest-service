@@ -35,10 +35,10 @@ class UserRepository(BaseRepository[User, AsyncSession]):
         except IntegrityError:
             raise UserAlreadyExists()
 
-    async def update_last_activity(self, tg_id: int) -> None:
+    async def update_last_activity(self, user_id: int) -> None:
         stmt = (
             update(User)
-            .where(User.tg_id == tg_id)
+            .where(User.id == user_id)
             .values(last_activity=func.now())
             .returning(User.id)
         )

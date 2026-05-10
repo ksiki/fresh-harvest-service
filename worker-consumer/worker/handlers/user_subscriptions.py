@@ -14,7 +14,7 @@ class UserSubscriptionHandler:
     ) -> None:
         expired_user_ids = await user_subs_rep.deactivate_expired_subscriptions()
 
-        if not expired_user_ids:
+        if len(expired_user_ids) == 0:
             logger.info("No expired subscriptions found.")
             return
 

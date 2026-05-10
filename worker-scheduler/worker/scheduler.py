@@ -4,6 +4,7 @@ from typing import Final
 from taskiq import TaskiqScheduler
 from taskiq.schedule_sources import LabelScheduleSource
 
+import shared.queue.tasks  # noqa: F401
 from shared.queue.broker import broker
 
 logging.basicConfig(

@@ -21,7 +21,7 @@ class SQLClient:
         )
 
     @asynccontextmanager
-    async def session_dependency(self) -> AsyncSession:
+    async def session_scope(self) -> AsyncSession:
         async with self._session_factory() as session:
             try:
                 yield session
@@ -35,6 +35,10 @@ class SQLClient:
             finally:
                 logger.info("Postgre session context closed")
                 await session.close()
+
+    async def session_dependency(self) -> AsyncSession:
+        async with self.session_scope() as session:
+            yield session
 
     async def dispose(self) -> None:
         await self._engine.dispose()

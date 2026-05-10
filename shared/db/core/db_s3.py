@@ -23,7 +23,7 @@ class S3Client:
         self._session = aioboto3.Session()
 
     @asynccontextmanager
-    async def session_dependency(self) -> AioBaseClient:
+    async def session_scope(self) -> AioBaseClient:
         try:
             async with self._session.client("s3", **self._config) as client:
                 logger.info("S3 session created successfully")
@@ -36,6 +36,10 @@ class S3Client:
             raise
         finally:
             logger.info("S3 session context closed")
+
+    async def session_dependency(self) -> AioBaseClient:
+        async with self.session_scope() as session:
+            yield session
 
 
 database: Final[S3Client] = S3Client(

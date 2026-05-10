@@ -1,8 +1,10 @@
 import logging
 
 from sqlalchemy import func, insert, select, update
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from shared.db.core.exceptions import UserAlreadyExists, UserNotExists
 from shared.db.models.user import User
 from shared.db.repositories.base import BaseRepository
 
@@ -15,22 +17,31 @@ class UserRepository(BaseRepository[User, AsyncSession]):
     async def get_id_by_tg_id(self, tg_id: int) -> int | None:
         stmt = select(User.id).where(User.tg_id == tg_id)
         result = await self.session.execute(stmt)
-        logger.info("Fetched id by tg id completed successfully.")
         return result.scalar_one_or_none()
 
     async def register(self, tg_id: int) -> int:
-        stmt = (
-            insert(User)
-            .values(
-                tg_id=tg_id,
-                first_activity=func.now(),
-                last_activity=func.now(),
+        try:
+            stmt = (
+                insert(User)
+                .values(
+                    tg_id=tg_id,
+                    first_activity=func.now(),
+                    last_activity=func.now(),
+                )
+                .returning(User.id)
             )
+            result = await self.session.execute(stmt)
+            return result.scalar_one()
+        except IntegrityError:
+            raise UserAlreadyExists()
+
+    async def update_last_activity(self, tg_id: int) -> None:
+        stmt = (
+            update(User)
+            .where(User.tg_id == tg_id)
+            .values(last_activity=func.now())
             .returning(User.id)
         )
         result = await self.session.execute(stmt)
-        return result.scalar_one()
-
-    async def update_last_activity(self, tg_id: int) -> None:
-        stmt = update(User).where(User.tg_id == tg_id).values(last_activity=func.now())
-        await self.session.execute(stmt)
+        if result.scalar_one_or_none() is None:
+            raise UserNotExists()

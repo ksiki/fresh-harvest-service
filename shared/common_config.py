@@ -5,7 +5,6 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    x_api_key: str
     database_url: str
     rabbitmq_url: str
     s3_endpoint_url: str

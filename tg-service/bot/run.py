@@ -23,7 +23,7 @@ async def run():
     await bot.delete_webhook(drop_pending_updates=True)
     await set_main_menu_button(bot=bot)
 
-    asyncio.create_task(broker.startup())
+    await broker.startup()
 
     dispatcher.include_router(router=router)
     await dispatcher.start_polling(bot)

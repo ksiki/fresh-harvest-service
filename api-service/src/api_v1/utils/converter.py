@@ -54,6 +54,7 @@ async def subscriptions_to_subscriptions_response(
 ) -> list[SubscriptionResponse]:
     result = [
         SubscriptionResponse(
+            id=sub.id,
             str_id=sub.str_id,
             title=sub.title,
             active_post_limit=sub.active_post_limit,

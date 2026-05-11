@@ -30,8 +30,8 @@ def post_factory(
     product_rep: ProductRepository,
 ) -> Callable:
     async def _create_post(
-        tg_id: int = 12345,
-        prod_str_id: str = "apple",
+        tg_id: int,
+        prod_str_id: str,
         status=PostStatus.VALIDATE,
         disable_at: datetime = func.now(),
         delete_at: datetime = func.now() + timedelta(hours=24),
@@ -50,8 +50,8 @@ def post_factory(
 
         params = {
             "user_id": user_id,
-            "prod_id": product.id,
-            "img_name": "post.jpg",
+            "product_id": product.id,
+            "image_name": "post.jpg",
             "description": "Description",
             "price": Decimal("10"),
             "geo": "POINT(0 0)",
@@ -91,14 +91,18 @@ class TestPostRep:
         assert post.status == PostStatus.VALIDATE
 
     async def test_get_by_products(
-        self, post_factory: Callable, post_rep: PostRepository
+        self,
+        post_factory: Callable,
+        post_rep: PostRepository,
+        product_rep: ProductRepository,
     ) -> None:
         post_id_1 = await post_factory(
             tg_id=1, prod_str_id="apple", status=PostStatus.ACTIVE
         )
         await post_factory(tg_id=2, prod_str_id="banana", status=PostStatus.ACTIVE)
 
-        apple_posts = await post_rep.get_by_products({1})
+        product = await product_rep.get_by_str_id("apple")
+        apple_posts = await post_rep.get_by_products({product.id})
 
         assert len(apple_posts) == 1
         assert apple_posts[0].id == post_id_1

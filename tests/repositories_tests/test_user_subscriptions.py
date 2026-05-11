@@ -47,16 +47,19 @@ class TestSubscriptionRep:
         assert user_sub is not None
 
     @pytest.mark.parametrize(
-        "test_user_id, expires_at, expectation_result",
+        "use_actual_id, expires_at, expectation_result",
         [
-            (1, func.now() - timedelta(hours=1), UserSubscription),
-            (2, func.now() + timedelta(hours=1), UserSubscription),
-            (999, func.now() + timedelta(hours=1), type(None)),
+            # Используем ID созданного пользователя, подписка просрочена
+            (True, func.now() - timedelta(hours=1), UserSubscription),
+            # Используем ID созданного пользователя, подписка активна
+            (True, func.now() + timedelta(hours=1), UserSubscription),
+            # Используем несуществующий ID
+            (False, func.now() + timedelta(hours=1), type(None)),
         ],
     )
     async def test_get_active(
         self,
-        test_user_id: int,
+        use_actual_id: bool,
         expires_at: datetime,
         expectation_result: UserSubscription | None,
         session: AsyncSession,
@@ -65,7 +68,6 @@ class TestSubscriptionRep:
         user_subscription_rep: UserSubscriptionRepository,
     ) -> None:
         sub_id, _ = subscription
-
         stmt = insert(UserSubscription).values(
             user_id=user_id,
             subscription_id=sub_id,
@@ -75,7 +77,8 @@ class TestSubscriptionRep:
         )
         await session.execute(stmt)
 
-        sub = await user_subscription_rep.get_active(user_id=test_user_id)
+        search_id = user_id if use_actual_id else 999999
+        sub = await user_subscription_rep.get_active(user_id=search_id)
 
         assert isinstance(sub, expectation_result)
 

@@ -1,7 +1,7 @@
 import uuid
 from datetime import timedelta
 
-from api_v1.utils.post_halper import (
+from api_v1.utils.converter import (
     posts_to_posts_response,
 )
 from schemas.post import CreatePost, PostResponse

@@ -1,5 +1,6 @@
-from worker.dependencies import RepContainer, with_repositories
 from worker.handlers.posts import PostHandler
+
+from shared.db.rep_container import RepContainer, with_repositories
 
 
 @with_repositories

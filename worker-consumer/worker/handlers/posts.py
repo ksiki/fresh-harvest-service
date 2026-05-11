@@ -1,8 +1,8 @@
 import logging
 
 from better_profanity import profanity
-from config import settings
 from sightengine.client import SightengineClient
+from worker.config import settings
 
 from shared.db.repositories.images import ImageRepository
 from shared.db.repositories.posts import PostRepository
@@ -70,10 +70,10 @@ class PostHandler:
                     )
                     return
 
-                lifetime = post.disable_at - post.pub_at
-                await post_rep.reactivate(post_id=post.id, lifetime=lifetime)
+            lifetime = post.disable_at - post.pub_at
+            await post_rep.reactivate(post_id=post.id, lifetime=lifetime)
         except Exception as e:
-            logger.error(f"Ошибка валидации изображения: {e}")
+            logger.error(f"Image validation error: {e}")
             await notify_on_invalid(
                 message="Приносим свои извинения - у нас возникли проблемы с проверкой вашего поста. Попробуйте позже или обратитесь в поддержку"
             )

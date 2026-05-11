@@ -77,8 +77,8 @@ class TestPostRep:
     ) -> None:
         post_id = await post_rep.create(
             user_id=user_id,
-            prod_id=product_id,
-            img_name="post.png",
+            product_id=product_id,
+            image_name="post.png",
             description="post description",
             price=0.99,
             geo="POINT(24.3 25.3)",

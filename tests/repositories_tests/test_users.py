@@ -22,7 +22,7 @@ class TestUserRep:
             future_time = start_time + timedelta(minutes=1)
             mock_now.return_value = future_time
 
-            await user_rep.update_last_activity(tg_id=tg_id)
+            await user_rep.update_last_activity(user_id=user_id)
 
         user = await user_rep.get_by_id(id=user_id)
         assert user.last_activity == future_time

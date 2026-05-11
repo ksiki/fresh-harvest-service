@@ -1387,6 +1387,25 @@ docs = ["sphinx (>=5.3)", "sphinx-rtd-theme (>=1)"]
 testing = ["coverage (>=6.2)", "hypothesis (>=5.7.1)"]
 
 [[package]]
+name = "pytest-env"
+version = "1.6.0"
+description = "pytest plugin that allows you to add environment variables."
+optional = false
+python-versions = ">=3.10"
+groups = ["main"]
+files = [
+    {file = "pytest_env-1.6.0-py3-none-any.whl", hash = "sha256:1e7f8a62215e5885835daaed694de8657c908505b964ec8097a7ce77b403d9a3"},
+    {file = "pytest_env-1.6.0.tar.gz", hash = "sha256:ac02d6fba16af54d61e311dd70a3c61024a4e966881ea844affc3c8f0bf207d3"},
+]
+
+[package.dependencies]
+pytest = ">=9.0.2"
+python-dotenv = ">=1.2.2"
+
+[package.extras]
+testing = ["covdefaults (>=2.3)", "coverage (>=7.13.4)", "pytest-mock (>=3.15.1)"]
+
+[[package]]
 name = "python-dateutil"
 version = "2.9.0.post0"
 description = "Extensions to the standard Python datetime module"
@@ -1938,4 +1957,4 @@ propcache = ">=0.2.1"
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<3.13"
-content-hash = "804145d0eb8137940698ee42c34d2f871031d9222ca7520f1b2e8648143e6be1"
+content-hash = "b7bde721951831c8060bbcf7d344657b16fee18ca96c790915d7339d48222de9"

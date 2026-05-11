@@ -8,6 +8,7 @@ from shared.db.core.db_s3 import database as s3_db
 from shared.db.core.db_sql import database as sql_db
 from shared.db.repositories.images import ImageRepository
 from shared.db.repositories.posts import PostRepository
+from shared.db.repositories.products import ProductRepository
 from shared.db.repositories.subscriptions import SubscriptionRepository
 from shared.db.repositories.user_subscriptions import UserSubscriptionRepository
 from shared.db.repositories.users import UserRepository
@@ -37,6 +38,10 @@ class RepContainer:
     @property
     def user_sub_rep(self) -> UserSubscriptionRepository:
         return UserSubscriptionRepository(session=self.sql)
+
+    @property
+    def product_rep(self) -> ProductRepository:
+        return ProductRepository(session=self.sql)
 
 
 def with_repositories(func) -> Callable:

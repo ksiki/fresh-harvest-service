@@ -41,7 +41,7 @@ class RepContainer:
 
 def with_repositories(func) -> Callable:
     @wraps(func)
-    async def wrapper(*args, **kwargs) -> RepContainer:
+    async def wrapper(*args, **kwargs) -> Callable:
         async with sql_db.session_scope() as sql, s3_db.session_scope() as s3:
             return await func(
                 *args,

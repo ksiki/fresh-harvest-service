@@ -72,8 +72,8 @@ class PostRepository(BaseRepository[Post, AsyncSession]):
     async def create(
         self,
         user_id: int,
-        prod_id: int,
-        img_name: str,
+        product_id: int,
+        image_name: str,
         description: str,
         price: Decimal,
         geo: WKBElement | str,
@@ -84,8 +84,8 @@ class PostRepository(BaseRepository[Post, AsyncSession]):
             insert(Post)
             .values(
                 user_id=user_id,
-                product_id=prod_id,
-                image_name=img_name,
+                product_id=product_id,
+                image_name=image_name,
                 description=description,
                 price=price,
                 geo=geo,
